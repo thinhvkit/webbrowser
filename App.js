@@ -59,8 +59,7 @@ const AddressBar = ({url, onLoad, onReload}) => {
 };
 
 const App = () => {
-  const [url, setUrl] = useState('google.com');
-  const [loading, setLoading] = useState(false);
+  const [url, setUrl] = useState('http://google.com');
   const isDarkMode = useColorScheme() === 'dark';
   const webviewRef = useRef();
 
@@ -70,11 +69,11 @@ const App = () => {
   };
 
   const reload = () => {
+    console.log('reload');
     webviewRef.current.reload();
   };
 
   const load = param => {
-    console.log('param', param);
     setUrl(param);
   };
 
