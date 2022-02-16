@@ -9,7 +9,9 @@
 import React, {useRef, useState} from 'react';
 import {
   ActivityIndicator,
+  RefreshControl,
   SafeAreaView,
+  ScrollView,
   StatusBar,
   TextInput,
   useColorScheme,
@@ -59,9 +61,16 @@ const AddressBar = ({url, onLoad, onReload}) => {
 };
 
 const App = () => {
+  const [refreshing, setRefreshing] = useState(false);
   const [url, setUrl] = useState('http://google.com');
   const isDarkMode = useColorScheme() === 'dark';
   const webviewRef = useRef();
+
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+    webviewRef.current.reload();
+    setTimeout(2000).then(() => setRefreshing(false));
+  }, []);
 
   const backgroundStyle = {
     flex: 1,
@@ -69,7 +78,6 @@ const App = () => {
   };
 
   const reload = () => {
-    console.log('reload');
     webviewRef.current.reload();
   };
 
@@ -84,19 +92,25 @@ const App = () => {
         <AddressBar onReload={reload} onLoad={load} url={''} />
       </View>
 
-      <WebView
-        ref={webviewRef}
-        automaticallyAdjustContentInsets={false}
-        style={styles.webView}
-        source={{uri: url}}
-        javaScriptEnabled={true}
-        domStorageEnabled={true}
-        decelerationRate="normal"
-        startInLoadingState={true}
-        scalesPageToFit={true}
-        pullToRefreshEnabled={true}
-        bounces={true}
-      />
+      <ScrollView
+        style={styles.scrollStyle}
+        contentContainerStyle={styles.container}
+        refreshControl={
+          <RefreshControl
+            refreshing={false}
+            onRefresh={reload} // exl in function : this.yourWebview.reload();
+          />
+        }>
+        <WebView
+          ref={webviewRef}
+          automaticallyAdjustContentInsets={false}
+          style={styles.webView}
+          source={{uri: url}}
+          javaScriptEnabled={true}
+          startInLoadingState={true}
+          scalesPageToFit={true}
+        />
+      </ScrollView>
     </SafeAreaView>
   );
 };

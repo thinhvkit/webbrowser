@@ -6,6 +6,7 @@ const ELEMENT_MARGIN = 8;
 const SHADOW_COLOR = '#333';
 const SHADOW_OPACITY = 0.4;
 const SHADOW_RADIUS = 1;
+const BORDER_RADIUS = 8;
 
 export default StyleSheet.create({
   container: {
@@ -19,6 +20,7 @@ export default StyleSheet.create({
     shadowOpacity: SHADOW_OPACITY,
     shadowRadius: SHADOW_RADIUS,
     shadowOffset: {height: 1, width: 0},
+    borderBottomWidth: 1,
   },
 
   addressBarRow: {
@@ -35,7 +37,7 @@ export default StyleSheet.create({
   addressBarTextInput: {
     backgroundColor: BGWASH,
     borderColor: 'transparent',
-    borderRadius: 3,
+    borderRadius: BORDER_RADIUS,
     borderWidth: 1,
     height: 40,
     paddingLeft: 10,
@@ -89,5 +91,9 @@ export default StyleSheet.create({
     alignItems: 'center',
     backgroundColor: 'rgba(0,0,0,0.3)',
     zIndex: 99,
+  },
+  scrollStyle: {
+    backgroundColor: 'white',
+    position: 'relative',
   },
 });
